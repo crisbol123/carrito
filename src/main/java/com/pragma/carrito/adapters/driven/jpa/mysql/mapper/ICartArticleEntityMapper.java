@@ -7,6 +7,8 @@ import com.pragma.carrito.domain.model.CartArticle;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface ICartArticleEntityMapper {
 
@@ -17,6 +19,9 @@ public interface ICartArticleEntityMapper {
     Cart toModel(CartEntity cartEntity);
 
     CartArticle toModel(CartArticleEntity cartArticleEntity);
+
+
+    List<CartArticle> toModelList(List<CartArticleEntity> cartArticleEntities);
 
 
 }

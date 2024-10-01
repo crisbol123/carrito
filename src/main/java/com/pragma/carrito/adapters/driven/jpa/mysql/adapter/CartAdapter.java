@@ -61,5 +61,15 @@ private final CartRepository cartRepository;
         cartArticleRepository.delete(cartArticleEntity);
     }
 
+    @Override
+    public List<Integer> findQuantitiesByUserId(Long userId) {
+        return cartArticleRepository.findQuantitiesByUserId(userId);
+    }
+
+    @Override
+    public Optional<List<CartArticle>> findAllArticlesByUserId(Long userId) {
+        return Optional.of(cartArticleEntityMapper.toModelList(cartArticleRepository.findAllArticlesByUserId(userId)));
+    }
+
 
 }

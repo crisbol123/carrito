@@ -17,6 +17,10 @@ public interface CartPersistencePort {
 
     void deleteArticleCart(CartArticle cartArticle);
 
+    List<Integer> findQuantitiesByUserId(Long userId);
+
+    Optional<List<CartArticle>> findAllArticlesByUserId(Long userId);
+
 
 
 

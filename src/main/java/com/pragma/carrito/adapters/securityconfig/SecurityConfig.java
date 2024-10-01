@@ -18,7 +18,6 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -29,8 +28,10 @@ public class SecurityConfig {
                                         "/v3/api-docs/**",
                                         "/swagger-ui/**",
                                         "/swagger-resources/**",
-                                        "/webjars/**").permitAll()
+                                        "/webjars/**"
+                                ).permitAll()  // Permitir acceso público a Swagger
                                 .requestMatchers("/cart/add-article-to-cart").hasRole("CUSTOMER")
+                                .requestMatchers("/cart/buy").hasRole("CUSTOMER")
                                 .requestMatchers("/cart/delete-article-from-cart").hasRole("CUSTOMER")
                                 .anyRequest().authenticated()
                 )
@@ -41,4 +42,5 @@ public class SecurityConfig {
                 .build();
     }
 }
+
 

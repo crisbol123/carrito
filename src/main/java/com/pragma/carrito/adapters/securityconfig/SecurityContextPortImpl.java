@@ -15,4 +15,10 @@ public class SecurityContextPortImpl implements ISecurityContextPort {
 
         return authorizationResponse.getUserId();
     }
+
+    @Override
+    public String getEmail() {
+        AuthorizationResponse authorizationResponse = (AuthorizationResponse) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return authorizationResponse.getEmail();
+    }
 }

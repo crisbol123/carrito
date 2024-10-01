@@ -2,10 +2,12 @@ package com.pragma.carrito.adapters.driven.feigns.clients;
 
 
 import com.pragma.carrito.adapters.driven.feigns.FeignClientConfig;
-import com.pragma.carrito.adapters.driven.feigns.dto.FindQuantityByIdRequest;
-import com.pragma.carrito.adapters.driven.feigns.dto.QuantityResponse;
+import com.pragma.carrito.adapters.driven.feigns.dto.UpdateStockRequest;
+import com.pragma.carrito.domain.util.PagedResponse;
+import com.pragma.carrito.domain.util.StockInformationArticle;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -23,4 +25,13 @@ public interface StockFeignClient {
     @GetMapping("/article/get-id-categories-by-articles-id")
     List<Long> findIdCategoryByArticlesId(@RequestParam List<Long> articleId);
 
+    @GetMapping("/article/get-all-articles")
+    PagedResponse<StockInformationArticle> getAllArticles(@RequestParam List<Long> articleId,
+                                                          @RequestParam Boolean ascOrder,
+                                                          @RequestParam String mark,
+                                                          @RequestParam String category,
+                                                          @RequestParam int page,
+                                                          @RequestParam int size);
+    @PostMapping("/article/remove-stock")
+    void updateStock(@RequestBody UpdateStockRequest updateStockRequest);
 }

@@ -1,8 +1,10 @@
 package com.pragma.carrito.configuration;
 
+import com.pragma.carrito.adapters.driven.feigns.adapter.ReportFeignClientAdapter;
 import com.pragma.carrito.adapters.driven.feigns.adapter.StockFeignClientAdapter;
 import com.pragma.carrito.adapters.driven.feigns.adapter.TransactionalFeignClientAdapter;
 import com.pragma.carrito.adapters.driven.feigns.adapter.UserFeignClientAdapter;
+import com.pragma.carrito.adapters.driven.feigns.clients.ReportFeignClient;
 import com.pragma.carrito.adapters.driven.feigns.clients.StockFeignClient;
 import com.pragma.carrito.adapters.driven.feigns.clients.TransactionalFeignClient;
 import com.pragma.carrito.adapters.driven.feigns.clients.UserFeignClient;
@@ -29,8 +31,12 @@ public class BeanConfiguration {
     private final CartArticleRepository cartArticleRepository;
     private final ICartArticleEntityMapper cartArticleEntityMapper;
     private final CartRepository cartRepository;
+    private final ReportFeignClient reportFeignClient;
 
-
+@Bean
+public ReportFeignClientPort reportFeignClientPort() {
+        return new ReportFeignClientAdapter(reportFeignClient);
+    }
 
     @Bean
     public StockFeignClientPort stockFeignClientPort() {
@@ -50,7 +56,7 @@ public class BeanConfiguration {
     }
 @Bean
     public ICartServicePort cartServicePort(){
-        return new CartUseCase(stockFeignClientPort(), transactionalFeignClientPort(), cartPersistencePort(), securityContextPort());
+        return new CartUseCase(stockFeignClientPort(), transactionalFeignClientPort(), cartPersistencePort(), securityContextPort(), reportFeignClientPort());
 }
 @Bean
     public ISecurityContextPort securityContextPort(){

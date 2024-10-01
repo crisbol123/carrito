@@ -1,10 +1,12 @@
 package com.pragma.carrito.configuration.exceptionhandler;
 
 
+import com.pragma.carrito.adapters.driven.feigns.exception.NoEnoughStockException;
 import com.pragma.carrito.adapters.driven.feigns.exception.NoNegativeStockException;
 import com.pragma.carrito.adapters.driven.jpa.mysql.exception.ElementNotFoundException;
 import com.pragma.carrito.configuration.Constants;
 import com.pragma.carrito.domain.exception.ExcededCategoriesLimitException;
+import com.pragma.carrito.domain.exception.NoElementsInCartException;
 import com.pragma.carrito.domain.exception.OutOfStockException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +41,24 @@ public class ControllerAdvisor {
     }
     @ExceptionHandler(ExcededCategoriesLimitException.class)
     public ResponseEntity<ExceptionResponse> handleExcededCategoriesLimitException(ExcededCategoriesLimitException ex) {
+        ExceptionResponse response = new ExceptionResponse(
+                ex.getMessage(),
+                HttpStatus.BAD_REQUEST.toString(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(NoEnoughStockException.class)
+    public ResponseEntity<ExceptionResponse> handleNoEnoughStockException(NoEnoughStockException ex) {
+        ExceptionResponse response = new ExceptionResponse(
+                ex.getMessage(),
+                HttpStatus.BAD_REQUEST.toString(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(NoElementsInCartException.class)
+    public ResponseEntity<ExceptionResponse> handleNoElementsInCartException(NoElementsInCartException ex) {
         ExceptionResponse response = new ExceptionResponse(
                 ex.getMessage(),
                 HttpStatus.BAD_REQUEST.toString(),

@@ -22,4 +22,11 @@ public interface CartArticleRepository extends JpaRepository<CartArticleEntity, 
 
     @Query("SELECT ca FROM CartArticleEntity ca WHERE ca.articleId = :articleId AND ca.cart.userId = :userId")
     Optional<CartArticleEntity> findArticleCartByUserIdAndArticleId(@Param("articleId") Long articleId, @Param("userId") Long userId);
+@Query("SELECT ca.quantity FROM CartArticleEntity ca WHERE ca.cart.userId = :userId")
+    List<Integer> findQuantitiesByUserId(Long userId);
+
+// query de findAllArticlesByUserId
+    @Query("SELECT ca FROM CartArticleEntity ca WHERE ca.cart.userId = :userId")
+    List<CartArticleEntity> findAllArticlesByUserId(@Param("userId") Long userId);
+
 }
